@@ -25,7 +25,7 @@ async def _reason_one(api_key: str, query: str, chunk_text: str, score: float) -
             lambda: client.models.generate_content(
                 model=GEMINI_MODEL,
                 contents=prompt,
-                config=GenerateContentConfig(max_output_tokens=120),
+                config=GenerateContentConfig(max_output_tokens=2048),
             ),
         )
         text = response.text or ""

@@ -41,8 +41,8 @@ export function EmptyState({ type }: EmptyStateProps) {
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
       </div>
-      <p className="font-medium text-primary-dark">No related passages found</p>
-      <p className="text-sm text-[#9CA3AF] mt-1">Try a different highlight or a longer text selection</p>
+      <p className="font-medium text-primary-dark">No strong matches found</p>
+      <p className="text-sm text-[#9CA3AF] mt-1">No passages met the 80% confidence threshold. Try highlighting a longer or more specific text selection.</p>
     </div>
   )
 }

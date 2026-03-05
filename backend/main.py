@@ -148,8 +148,17 @@ async def related_text(body: RelatedTextRequest):
     except Exception as e:
         raise HTTPException(500, f"Semantic search failed: {e}") from e
 
+    # Filter to results with >= 80% confidence
+    raw = [(chunk, score) for chunk, score in raw if score >= 0.80]
+
     if not raw:
-        return RelatedTextResponse(results=[], query=body.query, pdf_id=body.pdf_id)
+        async def empty_generator():
+            yield {
+                "event": "results",
+                "data": json.dumps({"results": [], "query": body.query, "pdf_id": body.pdf_id}),
+            }
+            yield {"event": "done", "data": "{}"}
+        return EventSourceResponse(empty_generator())
 
     # Build results without reasoning first
     results = [_build_result(chunk, score) for chunk, score in raw]
