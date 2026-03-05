@@ -6,6 +6,7 @@ export async function uploadPdf(file: File): Promise<UploadResponse> {
   formData.append('file', file)
   const { data } = await client.post<UploadResponse>('/upload', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
+    timeout: 300_000, // 5 min — OCR on large PDFs can take a while
   })
   return data
 }
