@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-[#2D2D2D] font-sans;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f0ebe5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #c8bfb6;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1E4C4A;
+  }
+}
+
+@layer components {
+  .btn-accent {
+    @apply bg-accent text-white rounded-lg px-3 py-1.5 text-sm font-medium
+           hover:opacity-90 active:scale-95 transition-all duration-150
+           shadow-sm hover:shadow-md;
+  }
+
+  .btn-primary {
+    @apply bg-primary-dark text-white rounded-lg px-3 py-1.5 text-sm font-medium
+           hover:bg-primary-light active:scale-95 transition-all duration-150;
+  }
+
+  .btn-ghost {
+    @apply text-primary-dark rounded-lg px-3 py-1.5 text-sm font-medium
+           hover:bg-primary-dark/10 active:scale-95 transition-all duration-150;
+  }
+
+  .card {
+    @apply bg-white rounded-xl border border-border shadow-sm p-4;
+  }
+
+  .score-badge {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold text-white;
+  }
+}
+
+/* react-pdf page wrapper */
+.react-pdf__Page {
+  position: relative;
+  margin: 0 auto;
+}
+
+.react-pdf__Page__canvas {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Highlight overlay */
+.highlight-overlay {
+  position: absolute;
+  background: rgba(193, 123, 110, 0.28);
+  border: 1px solid rgba(193, 123, 110, 0.5);
+  border-radius: 2px;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Jump target pulse */
+.jump-target {
+  position: absolute;
+  border: 2px solid #C17B6E;
+  border-radius: 3px;
+  pointer-events: none;
+  animation: jumpPulse 0.8s ease-in-out 3 forwards;
+}
+
+@keyframes jumpPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(193,123,110,0.7);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(193,123,110,0);
+    transform: scale(1.01);
+  }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.jump-target-fade {
+  animation: jumpPulse 0.8s ease-in-out 3, fadeOut 0.4s ease 2.4s forwards;
+}

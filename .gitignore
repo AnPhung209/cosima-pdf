@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+env/
+*.egg
+
+# Backend
+backend/cache/*.faiss
+backend/cache/*.pkl
+backend/uploads/*.pdf
+backend/.env
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.claude/
+.idea/
+*.swp
+*.swo
+
+# Env
+.env
+.env.local
