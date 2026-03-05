@@ -114,7 +114,7 @@ We combine embedding-based vector search for fast retrieval with LLM-based reaso
 **Pipeline:**
 
 1. **PDF Ingestion** — PyMuPDF extracts text blocks with bounding boxes per page. Falls back to Tesseract OCR for scanned/image-based PDFs.
-2. **Chunking** — Sentence-aware sliding window (~300 tokens/chunk, 50-token overlap) keeps semantic units intact while ensuring sufficient context per chunk.
+2. **Chunking** — Sentence-aware sliding window (~200 tokens/chunk, 0-token overlap) keeps semantic units intact while ensuring sufficient context per chunk.
 3. **Embedding** — Google `gemini-embedding-001` (3072-dim) embeds all chunks. Vectors are L2-normalized for cosine similarity via inner product.
 4. **Vector Store** — FAISS `IndexFlatIP` (inner product = cosine similarity on normalized vectors). Index cached to disk keyed by SHA-256 of PDF bytes — re-uploading the same PDF skips re-embedding.
 5. **Search** — User's highlighted text is embedded with the same model (using `RETRIEVAL_QUERY` task type for optimized query embeddings), then searched via FAISS top-8.
