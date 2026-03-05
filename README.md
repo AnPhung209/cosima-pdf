@@ -1,6 +1,6 @@
 # Cosima — PDF Semantic Search
 
-A full-stack web app to view PDFs, highlight text, and find semantically related passages using AI.
+A full-stack web app to view PURE PDFs only, highlight text, and find semantically related passages using AI.
 
 ## Stack
 

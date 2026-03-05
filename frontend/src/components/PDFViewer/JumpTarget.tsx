@@ -4,28 +4,29 @@ import type { RelatedResult } from '../../types'
 
 interface Props {
   target: { result: RelatedResult; key: number } | null
-  pageWidth: number
-  pageHeight: number
+  renderedPageWidth: number
+  pdfPageWidth: number
+  pdfPageHeight: number
   onDone: () => void
 }
 
-// PDF coordinate space has origin at bottom-left.
-// We need to convert to top-left CSS coordinates.
+// PyMuPDF already uses a top-left origin coordinate system, so no Y-axis
+// flip is needed. We only need to scale from PDF points to rendered pixels.
 function pdfToCSS(
   bbox: RelatedResult['bbox'],
-  pageWidth: number,
-  pageHeight: number,
-  scale: number
+  renderedPageWidth: number,
+  pdfPageWidth: number,
 ) {
+  const scale = pdfPageWidth > 0 ? renderedPageWidth / pdfPageWidth : 1
   return {
     left: bbox.x * scale,
-    top: (pageHeight - bbox.y - bbox.height) * scale,
+    top: bbox.y * scale,
     width: bbox.width * scale,
     height: bbox.height * scale,
   }
 }
 
-export function JumpTarget({ target, pageWidth, pageHeight, onDone }: Props) {
+export function JumpTarget({ target, renderedPageWidth, pdfPageWidth, pdfPageHeight, onDone }: Props) {
   const timerRef = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
@@ -39,8 +40,7 @@ export function JumpTarget({ target, pageWidth, pageHeight, onDone }: Props) {
 
   if (!target) return null
 
-  const scale = pageWidth > 0 ? pageWidth / 612 : 1 // 612 = standard PDF page width in points
-  const pos = pdfToCSS(target.result.bbox, pageWidth, pageHeight, scale)
+  const pos = pdfToCSS(target.result.bbox, renderedPageWidth, pdfPageWidth)
 
   return (
     <AnimatePresence>

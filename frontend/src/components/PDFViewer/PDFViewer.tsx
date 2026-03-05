@@ -15,7 +15,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@$
 
 export function PDFViewer() {
   const containerRef = useRef<HTMLDivElement>(null!)
-  const [pageSize, setPageSize] = useState({ width: 0, height: 1000 })
+  const [pdfPageSize, setPdfPageSize] = useState({ width: 612, height: 792 })
   const [containerWidth, setContainerWidth] = useState(750)
   const [visiblePage, setVisiblePage] = useState(1)
 
@@ -94,8 +94,9 @@ export function PDFViewer() {
     setNumPages(numPages)
   }
 
-  const onPageLoadSuccess = (page: { width: number; height: number }) => {
-    setPageSize({ width: page.width, height: page.height })
+  const onPageLoadSuccess = (page: { width: number; height: number; originalWidth: number; originalHeight: number }) => {
+    // Capture the original (unscaled) PDF page dimensions in points
+    setPdfPageSize({ width: page.originalWidth, height: page.originalHeight })
   }
 
   const goToPage = (page: number) => {
@@ -219,8 +220,9 @@ export function PDFViewer() {
               {jumpTarget && jumpTarget.result.page === pageNumber && (
                 <JumpTarget
                   target={jumpTarget}
-                  pageWidth={pageSize.width}
-                  pageHeight={pageSize.height}
+                  renderedPageWidth={pageWidth}
+                  pdfPageWidth={pdfPageSize.width}
+                  pdfPageHeight={pdfPageSize.height}
                   onDone={clearJumpTarget}
                 />
               )}

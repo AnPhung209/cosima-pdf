@@ -148,8 +148,8 @@ async def related_text(body: RelatedTextRequest):
     except Exception as e:
         raise HTTPException(500, f"Semantic search failed: {e}") from e
 
-    # Filter to results with >= 80% confidence
-    raw = [(chunk, score) for chunk, score in raw if score >= 0.80]
+    # Filter to results with >= % confidence
+    raw = [(chunk, score) for chunk, score in raw if score >= 0.60]
 
     if not raw:
         async def empty_generator():

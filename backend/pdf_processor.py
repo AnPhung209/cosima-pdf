@@ -240,7 +240,7 @@ def _build_chunks(spans: list[_Span], chunk_tokens: int = 300, overlap_tokens: i
     return chunks
 
 
-def parse_pdf(file_path: Path, chunk_tokens: int = 300, overlap_tokens: int = 50) -> tuple[list[TextChunk], int]:
+def parse_pdf(file_path: Path, chunk_tokens: int = 200, overlap_tokens: int = 0) -> tuple[list[TextChunk], int]:
     doc: fitz.Document = fitz.open(str(file_path))
     page_count = len(doc)
     spans = _extract_spans(doc)
